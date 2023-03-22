@@ -13,9 +13,22 @@ import org.apache.commons.text.WordUtils;
 
 public class App {
     public static void main(String[] args) {
-        LinkedList tokens;
-        tokens = split(getMessage());
-        String result = join(tokens);
-        System.out.println(WordUtils.capitalize(result));
+        Customer customer = new Customer("customer@example.com", 0);
+        LoyaltySystem loyaltySystem = new LoyaltySystem();
+
+        // Registra il cliente nel programma di fedeltà
+        loyaltySystem.registerCustomer(customer);
+
+        // Assegna punti fedeltà al cliente dopo un acquisto
+        loyaltySystem.assignLoyaltyPoints(customer, 1000);
+
+        // Riscatta un premio con i punti fedeltà
+        Reward reward = new Reward("Premio esclusivo", 500);
+        boolean success = loyaltySystem.redeemReward(customer, reward);
+        if (success) {
+            System.out.println("Il premio è stato riscattato con successo!");
+        } else {
+            System.out.println("Punti fedeltà insufficienti per riscattare il premio.");
+        }
     }
 }
