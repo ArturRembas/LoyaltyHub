@@ -8,14 +8,24 @@ package it.unicam.cs.ids.LoyaltyHub.app;
  *
  */
 public class Customer {
+	private String customerId;
+	private String name;
 	private String email;
     private int loyaltyPoints;
 
-    public Customer(String email, int initialPoints) {
-        this.email = email;
+    public Customer(String customerId, String name, String email, int initialPoints) {
+        this.customerId = customerId;
+        this.name = name;
+    	this.email = email;
         this.loyaltyPoints = initialPoints;
     }
 
+    public String getCustomerId () {
+    	return customerId;
+    }
+    
+    //public void setCustomerId 
+    
     public int getLoyaltyPoints() {
         return loyaltyPoints;
     }
