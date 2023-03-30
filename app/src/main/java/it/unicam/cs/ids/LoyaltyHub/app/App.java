@@ -3,12 +3,6 @@
  */
 package it.unicam.cs.ids.LoyaltyHub.app;
 
-import it.unicam.cs.ids.LoyaltyHub.list.LinkedList;
-
-import static it.unicam.cs.ids.LoyaltyHub.utilities.StringUtils.join;
-import static it.unicam.cs.ids.LoyaltyHub.utilities.StringUtils.split;
-import static it.unicam.cs.ids.LoyaltyHub.app.MessageUtils.getMessage;
-
 import org.apache.commons.text.WordUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class App {
     public static void main(String[] args) {
     	SpringApplication.run(App.class, args);
-    	
+    	/*
     	Customer customer = new Customer("Id1","mario rossi","customer@example.com", 0);
 	    LoyaltySystem loyaltySystem = new LoyaltySystem();
 	
@@ -31,7 +25,7 @@ public class App {
 	    loyaltySystem.assignLoyaltyPoints(customer, 1000);
 	
 	    // Riscatta un premio con i punti fedeltà
-	    Reward reward = new Reward("Premio esclusivo", 1500);
+	    Reward reward = new Reward(1,"Premio esclusivo", 1500);
 	    boolean success = loyaltySystem.redeemReward(customer, reward);
 	    if (success) {
 	        System.out.println("Il premio è stato riscattato con successo!");
@@ -39,6 +33,6 @@ public class App {
 	        System.out.println("Punti fedeltà insufficienti per riscattare il premio.");
 	
 	    }
-    	
+    	*/
    }
 }
