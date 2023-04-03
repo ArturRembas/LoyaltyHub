@@ -1,0 +1,24 @@
+{
+  "name": "loyalty-hub",
+  "version": "0.0.1",
+  "description": "LoyaltyHub - gestione fidelizzazione",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch"
+  },
+  "dependencies": {
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-loader": "^8.0.0",
+    "css-loader": "^5.0.0",
+    "style-loader": "^2.0.0",
+    "vue-loader": "^16.0.0",
+    "vue-template-compiler": "^2.0.0",
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0"
+  }
+}

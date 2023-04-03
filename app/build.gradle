@@ -7,6 +7,8 @@ plugins {
     id 'org.springframework.boot' version '3.0.5' // Usa l'ultima versione di Spring Boot disponibile
     id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
+    id 'com.github.node-gradle.node' version '3.0.1'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 group = 'it.unicam.cs.ids.LoyaltyHub' // Nome gruppo del progetto
@@ -15,16 +17,43 @@ sourceCompatibility = '17' // Versione di Java
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.0.5'
-	//implementation 'org.xerial:sqlite-jdbc:3.42.2.1'
 	implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
     implementation 'org.apache.commons:commons-text'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     runtimeOnly 'com.h2database:h2'
     //testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
+}
+
+node {
+    version = '14.18.1'
+    npmVersion = '7.24.0'
+    download = true
+}
+
+task npmInstall2(type: NpmTask) {
+    args = ['install']
+}
+
+task buildVue(type: NpmTask, dependsOn: npmInstall) {
+    group = 'build'
+    args = ['run', 'build']
+}
+
+shadowJar {
+    dependsOn buildVue
+    from('build/vue') {
+        include '**/*'
+    }
+}
+
+bootJar {
+    dependsOn shadowJar
+    from shadowJar
 }
 
 application {
