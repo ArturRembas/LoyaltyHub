@@ -1,5 +1,7 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +14,9 @@ import jakarta.persistence.Id;
 public class Customer implements ICustomer{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String name;
     private String surname;
@@ -30,7 +34,7 @@ public class Customer implements ICustomer{
     }
     
     public Customer(String email, String name, String surname, String address, String phoneNumber) {
-        this.email = email;
+    	this.email = email;
         this.name=name;
         this.surname=surname;
         this.address=address;

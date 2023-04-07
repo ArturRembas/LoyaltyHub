@@ -31,6 +31,28 @@ public class LoyaltyController {
     }
 
     /**
+     * Add a new PointsPolicy.
+     *
+     * @param 
+     * @return the registered PointsPolicy object
+     */
+    @PostMapping("/policy-add")
+    public PointsPolicy addPointsPolicy(@RequestBody PointsPolicy pointsPolicy) {
+    	return loyaltyService.addPointsPolicy(pointsPolicy);
+    }
+    
+    /**
+     * Add a new store.
+     *
+     * @param store the store object to add
+     * @return the registered store object
+     */
+    @PostMapping("/store-add")
+    public Store addStore(@RequestBody Store store) {
+    	return loyaltyService.addStore(store);
+    }
+    
+    /**
      * Assigns loyalty points to a customer for a specific store.
      *
      * @param customerId      the ID of the customer

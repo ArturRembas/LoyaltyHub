@@ -19,6 +19,8 @@ public class LoyaltyService {
     @Autowired
     private CustomerStorePointsRepository customerStorePointsRepository;
     @Autowired
+    private PointsPolicyRepository pointsPolicyRepository;
+    @Autowired
     private RewardRepository rewardRepository;
 
     /**
@@ -30,6 +32,28 @@ public class LoyaltyService {
     public Customer registerCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
+
+    /**
+     * Registers a new point policy.
+     *
+     * @param pointsPolicy to add
+     * @return the registered point policy object
+     */
+    public PointsPolicy addPointsPolicy(PointsPolicy pointsPolicy) {
+        return pointsPolicyRepository.save(pointsPolicy);
+    }
+    
+    
+    /**
+     * Registers a new store.
+     *
+     * @param store the store object to be registered
+     * @return the registered store object
+     */
+    public Store addStore(Store store) {
+        return storeRepository.save(store);
+    }
+
 
     /**
      * Assigns loyalty points to a customer for a specific store.
