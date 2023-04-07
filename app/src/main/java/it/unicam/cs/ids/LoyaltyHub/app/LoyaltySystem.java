@@ -1,48 +1,57 @@
-/**
- * 
- */
 package it.unicam.cs.ids.LoyaltyHub.app;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
- * @author user
- *
+ * LoyaltySystem class represents the main loyalty system that manages customer registration, database updates,
+ * and sending notifications for rewards.
  */
+
 public class LoyaltySystem {
-	public void registerCustomer(Customer customer) {
-        // Implementa il processo di registrazione del cliente al programma di fedeltà
+	@Autowired
+	private LoyaltyService loyaltyService;
+	
+	@Autowired
+    private CustomerRepository customerRepository;
+	
+	public LoyaltySystem(LoyaltyService loyaltyService) {
+        this.loyaltyService = loyaltyService;
+    }
+	
+    /**
+     * Registers a new customer in the loyalty system.
+     *
+     * @param customer The Customer object to register.
+     */
+    public void registerCustomer(Customer customer) {
+        customerRepository.save(customer);
     }
 
-    public void assignLoyaltyPoints(Customer customer, int points) {
-        // Implementa il processo di assegnazione dei punti fedeltà al cliente
-    	int currentPoints = customer.getLoyaltyPoints();
-        int updatedPoints = currentPoints + points;
-        customer.setLoyaltyPoints(updatedPoints);
-
-        // Opzionale: invia una notifica al cliente sull'assegnazione dei punti
-        System.out.println("Assegnati " + points + " punti fedeltà al cliente " + customer.getEmail() + ". Nuovo saldo: " + updatedPoints);
+    /**
+     * Updates the database after a customer redeems a reward.
+     *
+     * @param customer The customer who redeemed the reward.
+     * @param reward   The reward that was redeemed.
+     * @param store    The store where the reward was redeemed.
+     */
+    public void updateDatabase(Customer customer, Reward reward, Store store) {
+        loyaltyService.updateDatabase(customer, reward, store);
     }
 
-    public boolean redeemReward(Customer customer, Reward reward) {
-        // Implementa il processo di riscatto dei punti fedeltà in cambio di un premio
-    	int customerPoints = customer.getLoyaltyPoints();
-        int pointsRequired = reward.getPointsRequired();
-
-        if (customerPoints >= pointsRequired) {
-            int newLoyaltyPoints = customerPoints - pointsRequired;
-            customer.setLoyaltyPoints(newLoyaltyPoints);
-            updateDatabase(customer, reward);
-            sendNotification(customer, reward);
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    private void updateDatabase(Customer customer, Reward reward) {
-        // Aggiorna il database con il nuovo saldo dei punti del cliente e registra l'azione di riscatto
+    /**
+     * Sends a notification to the customer about the redeemed reward.
+     *
+     * @param customer The Customer who redeemed the reward.
+     * @param reward   The Reward that was redeemed by the customer.
+     */
+    /**
+     * Sends a notification to a customer about a redeemed reward.
+     *
+     * @param customer The customer who redeemed the reward.
+     * @param reward   The reward that was redeemed.
+     */
+    public void sendNotification(Customer customer, Reward reward) {
+        loyaltyService.sendNotification(customer, reward);
     }
 
-    private void sendNotification(Customer customer, Reward reward) {
-        // Invia una notifica al cliente con i dettagli del riscatto e il nuovo saldo dei punti
-    }
 }

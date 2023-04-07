@@ -9,28 +9,40 @@ import jakarta.persistence.Id;
  * Customer class represents a customer in the loyalty program.
  */
 @Entity
-public class Customer {
+public class Customer implements ICustomer{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String id;
+    private String name;
+    private String surname;
+    private String address;
+    private String phoneNumber;
     private String email;
-    private int loyaltyPoints;
+    private String password;
+
 
     public Customer() {
     }
 
     public Customer(String email) {
         this.email = email;
-        this.loyaltyPoints = 0;
+    }
+    
+    public Customer(String email, String name, String surname, String address, String phoneNumber) {
+        this.email = email;
+        this.name=name;
+        this.surname=surname;
+        this.address=address;
+        this.phoneNumber=phoneNumber;
     }
 
     // Getters and Setters
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -42,52 +54,46 @@ public class Customer {
 		this.email = email;
 	}
 
-	public int getLoyaltyPoints() {
-		return loyaltyPoints;
+
+	public String getName() {
+		return name;
 	}
 
-	public void setLoyaltyPoints(int loyaltyPoints) {
-		this.loyaltyPoints = loyaltyPoints;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
     
 }
-
-
-
-/*
-package it.unicam.cs.ids.LoyaltyHub.app;
-
-
-public class Customer implements ICustomer{
-	private String customerId;
-	private String name;
-	private String email;
-    private int loyaltyPoints;
-
-    public Customer(String customerId, String name, String email, int initialPoints) {
-        this.customerId = customerId;
-        this.name = name;
-    	this.email = email;
-        this.loyaltyPoints = initialPoints;
-    }
-
-    public String getCustomerId () {
-    	return customerId;
-    }
-    
-    //public void setCustomerId 
-    
-    public int getLoyaltyPoints() {
-        return loyaltyPoints;
-    }
-
-    public void setLoyaltyPoints(int loyaltyPoints) {
-        this.loyaltyPoints = loyaltyPoints;
-    }
-    
-    public String getEmail () {
-    	return this.email;
-    }
-}
-*/

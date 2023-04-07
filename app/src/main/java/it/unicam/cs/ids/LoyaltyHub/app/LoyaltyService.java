@@ -1,132 +1,99 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 /**
- * LoyaltyService class manages the logic of the loyalty program.
+ * LoyaltyService class provides the core business logic for the loyalty system.
  */
 @Service
 public class LoyaltyService {
 
-    private final CustomerRepository customerRepository;
-    private final RewardRepository rewardRepository;
-    private final PurchaseRepository purchaseRepository;
-    private final RedemptionRequestRepository redemptionRequestRepository;
-
     @Autowired
-    public LoyaltyService(CustomerRepository customerRepository, RewardRepository rewardRepository,
-                          PurchaseRepository purchaseRepository, RedemptionRequestRepository redemptionRequestRepository) {
-        this.customerRepository = customerRepository;
-        this.rewardRepository = rewardRepository;
-        this.purchaseRepository = purchaseRepository;
-        this.redemptionRequestRepository = redemptionRequestRepository;
-    }
-
-    // Implement the methods related to the business logic
-    public void registerCustomer(Customer customer) {
-        customerRepository.save(customer);
-    }
-    
-    public void assignLoyaltyPoints(Purchase purchase) {
-        Optional<Customer> customerOpt = customerRepository.findById(purchase.getCustomerId());
-        if (customerOpt.isPresent()) {
-            Customer customer = customerOpt.get();
-            int loyaltyPoints = calculateLoyaltyPoints(purchase.getTotalAmount());
-            customer.setLoyaltyPoints(customer.getLoyaltyPoints() + loyaltyPoints);
-            customerRepository.save(customer);
-        } else {
-            throw new IllegalArgumentException("Customer not found");
-        }
-    }
-    
-    public Reward redeemLoyaltyPoints(RedemptionRequest redemptionRequest) {
-        Optional<Customer> customerOpt = customerRepository.findById(redemptionRequest.getCustomerId());
-        if (customerOpt.isPresent()) {
-            Customer customer = customerOpt.get();
-            if (customer.getLoyaltyPoints() >= redemptionRequest.getPointsToRedeem()) {
-                Optional<Reward> rewardOpt = rewardRepository.findById(redemptionRequest.getId());
-                if (rewardOpt.isPresent()) {
-                    Reward reward = rewardOpt.get();
-                    customer.setLoyaltyPoints(customer.getLoyaltyPoints() - redemptionRequest.getPointsToRedeem());
-                    customerRepository.save(customer);
-                    return reward;
-                } else {
-                    throw new IllegalArgumentException("Reward not found");
-                }
-            } else {
-                throw new IllegalArgumentException("Insufficient points");
-            }
-        } else {
-            throw new IllegalArgumentException("Customer not found");
-        }
-    }
-    
-    private int calculateLoyaltyPoints(double amount) {
-        // Implement your own logic to calculate loyalty points based on the purchase amount
-        return (int) Math.round(amount / 10);
-    }
-}
-
-
-/*
-package it.unicam.cs.ids.LoyaltyHub.app;
-
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-@Service
-public class LoyaltyService {
-
-	private final CustomerRepository customerRepository;
-    private final RewardRepository rewardRepository;
-
+    private CustomerRepository customerRepository;
     @Autowired
-    public LoyaltyService(CustomerRepository customerRepository, RewardRepository rewardRepository) {
-        this.customerRepository = customerRepository;
-        this.rewardRepository = rewardRepository;
+    private StoreRepository storeRepository;
+    @Autowired
+    private CustomerStorePointsRepository customerStorePointsRepository;
+    @Autowired
+    private RewardRepository rewardRepository;
+
+    /**
+     * Registers a new customer.
+     *
+     * @param customer the customer object to be registered
+     * @return the registered customer object
+     */
+    public Customer registerCustomer(Customer customer) {
+        return customerRepository.save(customer);
     }
 
-    public void registerCustomer(Customer customer) {
-        //customerRepository.save(customer);
-    	customerRepository.addCustomer(customer);
+    /**
+     * Assigns loyalty points to a customer for a specific store.
+     *
+     * @param customerId      the ID of the customer
+     * @param storeId         the ID of the store
+     * @param purchaseAmount  the purchase amount for calculating points
+     * @return the updated CustomerStorePoints object
+     */
+    public CustomerStorePoints assignLoyaltyPoints(String customerId, int storeId, double purchaseAmount) {
+        ICustomer customer = customerRepository.findById(customerId).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID"));
+        StoreInterface store = storeRepository.findById(storeId).orElseThrow(() -> new IllegalArgumentException("Invalid store ID"));
+
+        CustomerStorePointsKey key = new CustomerStorePointsKey(customerId, storeId);
+        ICustomerStorePoints customerStorePoints = customerStorePointsRepository.findById(key).orElse(new CustomerStorePoints(key, customer, store, 0));
+
+        int points = store.getPointsPolicy().calculatePoints(purchaseAmount);
+        customerStorePoints.setLoyaltyPoints(customerStorePoints.getLoyaltyPoints() + points);
+
+        return customerStorePointsRepository.save(customerStorePoints);
     }
 
-    public void assignLoyaltyPoints(Purchase purchase) {
-        Optional<Customer> customer = customerRepository.findCustomerById(purchase.getCustomerId());
-        if (customer != null) {
-            int loyaltyPoints = calculateLoyaltyPoints(purchase.getTotalAmount());
-            customer.setLoyaltyPoints(customer.getLoyaltyPoints() + loyaltyPoints);
-            //customerRepository.save(customer);
-            customerRepository.addCustomer(customer);
-        } else {
-            throw new IllegalArgumentException("Customer not found");
+    /**
+     * Redeems a reward for a customer in a specific store.
+     *
+     * @param customerId the ID of the customer
+     * @param storeId    the ID of the store
+     * @param rewardId   the ID of the reward to be redeemed
+     * @return the updated CustomerStorePoints object
+     */
+    public CustomerStorePoints redeemReward(String customerId, int storeId, int rewardId) {
+        CustomerStorePointsKey key = new CustomerStorePointsKey(customerId, storeId);
+        ICustomerStorePoints customerStorePoints = customerStorePointsRepository.findById(key).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID or store ID"));
+
+        Reward reward = rewardRepository.findById(rewardId).orElseThrow(() -> new IllegalArgumentException("Invalid reward ID"));
+
+        if (customerStorePoints.getLoyaltyPoints() < reward.getPointsRequired()) {
+            throw new IllegalArgumentException("Not enough points to redeem the reward");
         }
+
+        customerStorePoints.setLoyaltyPoints(customerStorePoints.getLoyaltyPoints() - reward.getPointsRequired());
+
+        return customerStorePointsRepository.save(customerStorePoints);
     }
 
-    public Reward redeemLoyaltyPoints(RedemptionRequest redemptionRequest) {
-        Optional<Customer> customer = customerRepository.findCustomerById(redemptionRequest.getCustomerId());
-        if (customer != null && customer.getLoyaltyPoints() >= redemptionRequest.getPointsToRedeem()) {
-            Reward reward = rewardRepository.findRewardByPoints(redemptionRequest.getPointsToRedeem());
-            if (reward != null) {
-                customer.setLoyaltyPoints(customer.getLoyaltyPoints() - redemptionRequest.getPointsToRedeem());
-                customerRepository.save(customer);
-                return reward;
-            } else {
-                throw new IllegalArgumentException("No rewards available for the given points");
-            }
-        } else {
-            throw new IllegalArgumentException("Customer not found or insufficient points");
-        }
+    /**
+     * Retrieves the loyalty points for a specific customer in a specific store.
+     *
+     * @param customerId the ID of the customer
+     * @param storeId    the ID of the store
+     * @return the CustomerStorePoints object
+     */
+    public ICustomerStorePoints getCustomerStorePoints(String customerId, int storeId) {
+        CustomerStorePointsKey key = new CustomerStorePointsKey(customerId, storeId);
+        return customerStorePointsRepository.findById(key).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID or store ID"));
     }
 
-    private int calculateLoyaltyPoints(double amount) {
-        // Implement your own logic to calculate loyalty points based on the purchase amount
-        return (int) Math.round(amount / 10);
-    }
+	public void updateDatabase(Customer customer, Reward reward, Store store) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void sendNotification(Customer customer, Reward reward) {
+		// TODO Auto-generated method stub
+		
+	}
 }
-*/

@@ -52,39 +52,3 @@ public class Reward {
 	}
     
 }
-
-
-
-
-/*
- * 
-
-package it.unicam.cs.ids.LoyaltyHub.app;
-
-/**
- * @author user
- *
-
-public class Reward {
-	private int id;
-	private String name;
-    private int pointsRequired;
-
-    public Reward(int id, String name, int pointsRequired) {
-        this.name = name;
-        this.pointsRequired = pointsRequired;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getPointsRequired() {
-        return pointsRequired;
-    }
-    
-    public int getId () {
-    	return id;
-    }
-}
- */
