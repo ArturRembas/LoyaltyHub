@@ -6,7 +6,7 @@ import java.util.Optional;
 /**
  * CustomerRepository interface extends CrudRepository for managing Customer entities.
  */
-public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, String> {
 	// Cerca un cliente in base all'email
     Optional<Customer> findByEmail(String email);
     Optional<Customer> findById(String idCustomer);

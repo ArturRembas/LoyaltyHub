@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -110,14 +111,36 @@ public class LoyaltyService {
         CustomerStorePointsKey key = new CustomerStorePointsKey(customerId, storeId);
         return customerStorePointsRepository.findById(key).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID or store ID"));
     }
+    
+    public Customer updateCustomer(Customer updatedCustomer) {
+        if (!customerRepository.existsById(updatedCustomer.getId())) {
+            throw new NoSuchElementException("Customer not found with ID: " + updatedCustomer.getId());
+        }
+        return customerRepository.save(updatedCustomer);
+    }
 
-	public void updateDatabase(Customer customer, Reward reward, Store store) {
+
+	public void sendNotification(Customer customer, Reward reward) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void sendNotification(Customer customer, Reward reward) {
-		// TODO Auto-generated method stub
+	public void updateDatabase(Customer customer, Reward reward, Store store) {
+
+		CustomerStorePointsKey key = new CustomerStorePointsKey(customer.getId(), store.getId());
+        ICustomerStorePoints customerStorePoints = customerStorePointsRepository.findById(key)
+                .orElseThrow(() -> new NoSuchElementException("CustomerStorePoints not found with key: " + key));
+
+        int remainingPoints = customerStorePoints.getLoyaltyPoints() - reward.getPointsRequired();
+        customerStorePoints.setLoyaltyPoints(remainingPoints);
+
+        // Save updated customer points
+        customerStorePointsRepository.save(customerStorePoints);
+
+        // Save reward information
+        reward.setCustomer(customer);
+        reward.setStore(store);
+        rewardRepository.save(reward);
 		
 	}
 }

@@ -12,6 +12,8 @@ class CustomerTest {
         assertEquals("Mario", customer.getName());
         assertEquals("Rossi", customer.getSurname());
         assertEquals("mario.rossi@example.com", customer.getEmail());
+        assertEquals("via Roma, 1 - ROMA", customer.getAddress());
+        assertEquals("+39339123456", customer.getPhoneNumber());
+        
     }
-
 }

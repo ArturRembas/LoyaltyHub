@@ -116,4 +116,8 @@ public class Store implements StoreInterface {
 	public PointsPolicy getPointsPolicy() {
 		return pointsPolicy;
 	}
+
+	public void setPointsPolicy(PointsPolicy pointsPolicy) {
+		this.pointsPolicy=pointsPolicy;	
+	}
 }

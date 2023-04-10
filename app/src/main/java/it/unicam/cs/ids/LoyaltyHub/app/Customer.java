@@ -4,11 +4,21 @@ import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 /**
- * Customer class represents a customer in the loyalty program.
+ * Customer class represents a customer in the loyalty system.
+ * Each customer has a unique ID, a name, an email, and a map
+ * that associates a store with the corresponding points the customer has
+ * earned from purchases at that store.
+ * <p>
+ * The customer can earn points by making purchases at stores that are part of
+ * the loyalty system. The points are specific to each store and can be redeemed
+ * for rewards at the respective store.
+ * <p>
+ * A customer can also request to redeem points at a store for a specific reward.
+ * The redemption request will be processed by the store, and the points will be
+ * deducted from the customer's account if the redemption is successful.
  */
 @Entity
 public class Customer implements ICustomer{

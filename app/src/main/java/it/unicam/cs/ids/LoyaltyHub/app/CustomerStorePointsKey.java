@@ -7,7 +7,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 /**
- * CustomerStorePointsKey is the composite primary key for the CustomerStorePoints entity.
+ * CustomerStorePointsKey class represents a composite key for the association between
+ * a customer and a store in the CustomerStorePoints class.
+ * <p>
+ * This class is used to create a unique identifier for each CustomerStorePoints instance,
+ * combining the customer ID and the store ID. As a result, it enables the proper mapping
+ * and management of CustomerStorePoints instances in the system.
+ * <p>
+ * The class implements the Serializable interface to support the persistence and
+ * retrieval of CustomerStorePoints objects using the JPA framework.
  */
 @Embeddable
 public class CustomerStorePointsKey implements Serializable {

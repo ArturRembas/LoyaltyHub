@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -88,5 +89,14 @@ public class LoyaltyController {
     @GetMapping("/points/customer/{customerId}/store/{storeId}")
     public ICustomerStorePoints getCustomerStorePoints(@PathVariable String customerId, @PathVariable int storeId) {
         return loyaltyService.getCustomerStorePoints(customerId, storeId);
+    }
+    
+    @PutMapping("/update-customer/{customerId}")
+    public ResponseEntity<Customer> updateCustomer(@PathVariable String customerId, @RequestBody Customer updatedCustomer) {
+        if (!customerId.equals(updatedCustomer.getId())) {
+            return ResponseEntity.badRequest().build();
+        }
+        Customer updated = loyaltyService.updateCustomer(updatedCustomer);
+        return ResponseEntity.ok(updated);
     }
 }

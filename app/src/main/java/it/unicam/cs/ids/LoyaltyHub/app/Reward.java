@@ -14,6 +14,8 @@ public class Reward {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    private Customer customer;
+    private Store store;
     private String name;
     private int pointsRequired;
 
@@ -49,6 +51,22 @@ public class Reward {
 
 	public void setPointsRequired(int pointsRequired) {
 		this.pointsRequired = pointsRequired;
+	}
+
+	public void setStore(Store store) {
+		this.store=store;		
+	}
+	
+	public Store getStore() {
+		return store;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer=customer;
+	}
+	
+	public Customer getCustomer() {
+		return customer;
 	}
     
 }
