@@ -29,7 +29,7 @@ public class CustomerStorePoints implements ICustomerStorePoints {
     private String customerId;
     private int storeId;
     private int loyaltyPoints;
-    private CustomerStorePointsRepository customerStorePointsRepository;
+    //private CustomerStorePointsRepository customerStorePointsRepository;
 	
 
 	public CustomerStorePoints() {
@@ -41,15 +41,10 @@ public class CustomerStorePoints implements ICustomerStorePoints {
         this.loyaltyPoints = loyaltyPoints;
     }
 	
-	public CustomerStorePoints(CustomerStorePointsKey key, ICustomer customer, StoreInterface store, int i) {
+	public CustomerStorePoints(CustomerStorePointsKey key, ICustomer customer, IStore store, int i) {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ICustomerStorePoints getCustomerStorePoints(String customerId, int storeId) {
-	    CustomerStorePointsKey key = new CustomerStorePointsKey(customerId, storeId);
-		return customerStorePointsRepository.findById(key)
-	        .orElseThrow(() -> new NoSuchElementException("CustomerStorePoints not found with key: " + key));
-	}
 
 	public int getId() {
 		return id;

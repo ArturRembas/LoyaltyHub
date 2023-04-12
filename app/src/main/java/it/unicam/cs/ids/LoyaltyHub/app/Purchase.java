@@ -6,8 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 /**
- * Purchase class represents a purchase made by a customer.
- */
+* Purchase class represents a purchase made by a customer at a store.
+* It contains information about the customer, the store, the purchase amount,
+* and the points earned by the customer for this purchase.
+*/
 @Entity
 public class Purchase {
 

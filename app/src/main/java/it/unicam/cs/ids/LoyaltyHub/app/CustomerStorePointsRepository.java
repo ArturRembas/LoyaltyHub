@@ -2,14 +2,14 @@ package it.unicam.cs.ids.LoyaltyHub.app;
 
 import java.util.Optional;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * CustomerStorePointsRepository interface extends CrudRepository for managing CustomerStorePoints entities.
  *
  * @author YourName
  */
-public interface CustomerStorePointsRepository extends CrudRepository<CustomerStorePoints, Integer> {
+public interface CustomerStorePointsRepository extends JpaRepository<CustomerStorePoints, Integer> {
 
     /**
      * Finds a CustomerStorePoints record by the customer and store.
@@ -20,7 +20,7 @@ public interface CustomerStorePointsRepository extends CrudRepository<CustomerSt
      */
     CustomerStorePoints findByCustomerIdAndStoreId(String string, int storeId);
 
-	Optional<ICustomerStorePoints> findById(CustomerStorePointsKey key);
+	Optional<CustomerStorePoints> findById(CustomerStorePointsKey key);
 
 	CustomerStorePoints save(ICustomerStorePoints customerStorePoints);
 }

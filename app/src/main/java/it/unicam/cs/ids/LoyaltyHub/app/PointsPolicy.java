@@ -6,10 +6,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 /**
- * PointsPolicy class represents the points policy for a store.
- */
+* PointsPolicy class represents a policy for earning and redeeming points
+* in the loyalty system. A points policy defines how points are earned and
+* redeemed by customers.
+*/
 @Entity
-public class PointsPolicy implements PointsPolicyInterface {
+public class PointsPolicy implements IPointsPolicy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

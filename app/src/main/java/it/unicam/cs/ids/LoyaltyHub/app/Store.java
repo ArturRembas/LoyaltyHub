@@ -8,10 +8,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 /**
- * Store class represents a store that uses the loyalty program.
+ * Store class represents a store that uses the loyalty program. Each store has a unique ID, a name,
+ * an address, and a points policy associated with it. The points policy defines how customers earn
+ * and redeem points at the store.
+ *
+ * @author YourName
  */
 @Entity
-public class Store implements StoreInterface {
+public class Store implements IStore {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

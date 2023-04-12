@@ -6,6 +6,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
+/**
+ * WebConfig class provides configuration settings for the web application.
+ * It includes a CORS (Cross-Origin Resource Sharing) configuration to allow
+ * the front-end Vue.js application running on a specific origin to make requests
+ * to the back-end API.
+ *
+ * @author YourName
+ */
 @Configuration
 public class WebConfig {
 

@@ -2,9 +2,12 @@ package it.unicam.cs.ids.LoyaltyHub.app;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
 
 /**
  * Customer class represents a customer in the loyalty system.
@@ -20,19 +23,27 @@ import jakarta.persistence.Id;
  * The redemption request will be processed by the store, and the points will be
  * deducted from the customer's account if the redemption is successful.
  */
+
 @Entity
 public class Customer implements ICustomer{
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    //@GeneratedValue(generator = "uuid")
+    //@GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "VARCHAR(255)")
     private String id;
+     @Column(columnDefinition = "VARCHAR(255)")
     private String name;
+    @Column(columnDefinition = "VARCHAR(255)")
     private String surname;
+    @Column(columnDefinition = "VARCHAR(255)")
     private String address;
+    @Column(columnDefinition = "VARCHAR(255)")
     private String phoneNumber;
+    @Column(columnDefinition = "VARCHAR(255)")
     private String email;
+    @Column(columnDefinition = "VARCHAR(255)")
     private String password;
 
 
@@ -108,6 +119,5 @@ public class Customer implements ICustomer{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
     
 }

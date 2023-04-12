@@ -3,8 +3,27 @@ package it.unicam.cs.ids.LoyaltyHub.app;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * LoyaltySystem class represents the main loyalty system that manages customer registration, database updates,
- * and sending notifications for rewards.
+ * The LoyaltySystem class provides a high-level API for interacting with the core components of
+ * the loyalty program, including customers, stores, rewards, and redemption requests. It serves as
+ * the main entry point for clients of the loyalty program, exposing methods to add and update customers,
+ * create rewards, and process redemption requests.
+ * <p>
+ * This class encapsulates the business logic and data manipulation operations of the loyalty program,
+ * coordinating the interactions between the various entities and the underlying data storage layer.
+ * By providing a unified interface to the loyalty program, the LoyaltySystem class makes it easier
+ * for clients to interact with the program's functionality without having to be concerned about the
+ * internal details of the implementation.
+ * <p>
+ * The LoyaltySystem class delegates the actual data storage and retrieval tasks to the LoyaltyService
+ * class, which in turn interacts with the data access layer through various repository interfaces.
+ * This design maintains a clean separation of concerns between the business logic and data storage layers
+ * of the application, ensuring that changes to the underlying data storage mechanisms or the structure
+ * of the entities do not impact the way that the business logic is implemented.
+ * <p>
+ * The LoyaltySystem class is designed to be easily extensible, allowing for the addition of new features
+ * and functionality to the loyalty program without requiring significant changes to the existing codebase.
+ * Clients of the loyalty program can simply interact with the LoyaltySystem API to access the desired
+ * functionality, without needing to understand the details of the underlying implementation.
  */
 
 public class LoyaltySystem {

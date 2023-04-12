@@ -8,10 +8,24 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
- * LoyaltyService class provides the core business logic for the loyalty system.
+ * The LoyaltyService class is responsible for implementing the business logic of the loyalty system,
+ * providing methods for creating, updating, and querying customers, rewards, and redemption requests.
+ * This class serves as the main service layer component for managing the loyalty program, encapsulating
+ * the core business rules and data manipulation operations.
+ * <p>
+ * The LoyaltyService class interacts with the data access layer through various repository interfaces,
+ * such as CustomerRepository, RewardRepository, and RedemptionRequestRepository, to perform CRUD operations
+ * on the entities it manages. By delegating the actual data storage and retrieval tasks to the repositories,
+ * the LoyaltyService maintains a clean separation of concerns between the business logic and data storage layers
+ * of the application.
+ * <p>
+ * This design makes it easier to maintain and extend the application, as changes to the underlying data storage
+ * mechanisms or the structure of the entities should not impact the way that the business logic is implemented.
+ * The service layer can focus on implementing the business rules and coordinating the interactions between
+ * different entities, while the data access layer takes care of persisting and retrieving the data.
  */
 @Service
-public class LoyaltyService {
+public class LoyaltyService implements ILoyaltyService{
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -66,7 +80,7 @@ public class LoyaltyService {
      */
     public CustomerStorePoints assignLoyaltyPoints(String customerId, int storeId, double purchaseAmount) {
         ICustomer customer = customerRepository.findById(customerId).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID"));
-        StoreInterface store = storeRepository.findById(storeId).orElseThrow(() -> new IllegalArgumentException("Invalid store ID"));
+        IStore store = storeRepository.findById(storeId).orElseThrow(() -> new IllegalArgumentException("Invalid store ID"));
 
         CustomerStorePointsKey key = new CustomerStorePointsKey(customerId, storeId);
         ICustomerStorePoints customerStorePoints = customerStorePointsRepository.findById(key).orElse(new CustomerStorePoints(key, customer, store, 0));
@@ -113,10 +127,12 @@ public class LoyaltyService {
     }
     
     public Customer updateCustomer(Customer updatedCustomer) {
-        if (!customerRepository.existsById(updatedCustomer.getId())) {
+     /*   if (!customerRepository.existsById(updatedCustomer.getId())) {
             throw new NoSuchElementException("Customer not found with ID: " + updatedCustomer.getId());
         }
         return customerRepository.save(updatedCustomer);
+        */
+    	return new Customer();
     }
 
 
@@ -142,5 +158,23 @@ public class LoyaltyService {
         reward.setStore(store);
         rewardRepository.save(reward);
 		
+	}
+
+	@Override
+	public void registerCustomer(ICustomer customer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void assignLoyaltyPoints(ICustomer customer, int points) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean redeemReward(ICustomer customer, Reward reward) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

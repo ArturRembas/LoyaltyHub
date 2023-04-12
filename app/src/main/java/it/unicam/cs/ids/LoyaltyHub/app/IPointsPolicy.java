@@ -1,9 +1,11 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
 /**
- * PointsPolicyInterface represents a points policy for a loyalty program.
- */
-public interface PointsPolicyInterface {
+*IPointsPolicy represents an interface for managing points policies
+*in the loyalty system. A points policy defines how points are earned and
+*redeemed by customers.
+*/
+public interface IPointsPolicy {
 
     /**
      * Calculates the points earned for a given purchase amount.

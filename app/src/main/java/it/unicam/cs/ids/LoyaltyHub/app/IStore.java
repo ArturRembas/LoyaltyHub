@@ -1,9 +1,9 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
 /**
- * StoreInterface represents a store in the loyalty system.
+ * IStore represents a store in the loyalty system.
  */
-public interface StoreInterface {
+public interface IStore {
 
     /**
      * Adds a customer to the store's loyalty program.
