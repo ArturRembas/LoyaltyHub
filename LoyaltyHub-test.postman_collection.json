@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "4648fb9d-e802-4ac5-8daf-36f5ed1d46b9",
+		"name": "LoyaltyHub-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26785149"
+	},
+	"item": [
+		{
+			"name": "Registra un nuovo cliente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"mario.rossi@example.com\",\r\n    \"name\": \"Mario\",\r\n    \"surname\": \"Rossi\",\r\n    \"address\": \"via Roma,1 - ROMA\",\r\n    \"phoneNumber\": \"+39339123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/loyalty/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"loyalty",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registra un nuovo negozio",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Il mio negozio 1\",\r\n    \"address\": \"Via Milano, 1  - MILANO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/loyalty/store-add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"loyalty",
+						"store-add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assegna punti ad un cliente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\": \"a247a16b-78ad-49bb-a071-bf3ad0e78c95\",\r\n    \"storeId\": 100,\r\n    \"purchaseAmount\": 200.0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/loyalty/assign-points/customer/{customerId}/store/{storeId}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"loyalty",
+						"assign-points",
+						"customer",
+						"{customerId}",
+						"store",
+						"{storeId}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
