@@ -1,85 +1,148 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 /**
  * RedemptionRequest class represents a request made by a customer to redeem loyalty points for a reward.
  */
 @Entity
-public class RedemptionRequest {
+public class RedemptionRequest implements IRedemptionRequest {
+	
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int customerId;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
     private int pointsToRedeem;
     private int rewardId;
-    private String date;
+    private LocalDateTime date;
     private boolean isApproved;
+   
+    
 
     public RedemptionRequest() {
     }
 
-    public RedemptionRequest(int id, int customerId, int rewardId, int pointsToRedeem, String date) {
-        this.id=id;
-    	this.customerId = customerId;
-    	this.pointsToRedeem = pointsToRedeem;
-    	this.date = date;
-        this.rewardId = rewardId;
-        this.isApproved = false;
-    }
+    
+    
+    public RedemptionRequest(int id, Customer customer, int pointsToRedeem, int rewardId, LocalDateTime date,
+			boolean isApproved, Store store) {
+		this.id = id;
+		this.customer = customer;
+		this.pointsToRedeem = pointsToRedeem;
+		this.rewardId = rewardId;
+		this.date = date;
+		this.isApproved = isApproved;
+		this.store = store;
+	}
+
     
     // Getters and Setters
 
-    public int getId() {
+    @Override
+	public int getId() {
         return id;
     }
 
-    public int getCustomerId() {
-        return customerId;
-    }
 
-    public int getPointsToRedeem() {
+    @Override
+	public int getPointsToRedeem() {
         return pointsToRedeem;
     }
 
-    public String getDate() {
+    @Override
+	public LocalDateTime getDate() {
         return date;
     }
 
-    public boolean isApproved() {
+    @Override
+	public boolean isApproved() {
         return isApproved;
     }
 
     // Setters
 
-    public void setId(int id) {
+    @Override
+	public void setId(int id) {
         this.id = id;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public void setPointsToRedeem(int pointsToRedeem) {
+    @Override
+	public void setPointsToRedeem(int pointsToRedeem) {
         this.pointsToRedeem = pointsToRedeem;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setApproved(boolean isApproved) {
+    @Override
+	public void setApproved(boolean isApproved) {
         this.isApproved = isApproved;
     }
 
     // Method to approve a redemption request
-    public void approve() {
+    @Override
+	public void approve() {
         this.isApproved = true;
     }
+
+
+
+	@Override
+	public Customer getCustomer() {
+		return customer;
+	}
+
+
+
+	@Override
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+
+
+	@Override
+	public int getRewardId() {
+		return rewardId;
+	}
+
+
+
+	@Override
+	public void setRewardId(int rewardId) {
+		this.rewardId = rewardId;
+	}
+
+
+
+	@Override
+	public Store getStore() {
+		return store;
+	}
+
+
+
+	@Override
+	public void setStore(Store store) {
+		this.store = store;
+	}
+
+
+
+	@Override
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
 
     
 }

@@ -53,8 +53,8 @@ public class LoyaltySystem {
      * @param reward   The reward that was redeemed.
      * @param store    The store where the reward was redeemed.
      */
-    public void updateDatabase(Customer customer, Reward reward, Store store) {
-        loyaltyService.updateDatabase(customer, reward, store);
+    public void updateDatabase(Customer customer, IReward reward, Store store) {
+       // loyaltyService.updateDatabase(customer, reward, store);
     }
 
     /**
@@ -69,7 +69,7 @@ public class LoyaltySystem {
      * @param customer The customer who redeemed the reward.
      * @param reward   The reward that was redeemed.
      */
-    public void sendNotification(Customer customer, Reward reward) {
+    public void sendNotification(Customer customer, IReward reward) {
         loyaltyService.sendNotification(customer, reward);
     }
 

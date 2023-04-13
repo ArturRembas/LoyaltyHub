@@ -103,7 +103,7 @@ public class LoyaltyService implements ILoyaltyService{
         CustomerStorePointsKey key = new CustomerStorePointsKey(customerId, storeId);
         ICustomerStorePoints customerStorePoints = customerStorePointsRepository.findById(key).orElseThrow(() -> new IllegalArgumentException("Invalid customer ID or store ID"));
 
-        Reward reward = rewardRepository.findById(rewardId).orElseThrow(() -> new IllegalArgumentException("Invalid reward ID"));
+        IReward reward = rewardRepository.findById(rewardId).orElseThrow(() -> new IllegalArgumentException("Invalid reward ID"));
 
         if (customerStorePoints.getLoyaltyPoints() < reward.getPointsRequired()) {
             throw new IllegalArgumentException("Not enough points to redeem the reward");
@@ -127,16 +127,16 @@ public class LoyaltyService implements ILoyaltyService{
     }
     
     public Customer updateCustomer(Customer updatedCustomer) {
-     /*   if (!customerRepository.existsById(updatedCustomer.getId())) {
+   if (!customerRepository.existsById(updatedCustomer.getId())) {
             throw new NoSuchElementException("Customer not found with ID: " + updatedCustomer.getId());
         }
         return customerRepository.save(updatedCustomer);
-        */
-    	return new Customer();
+       
+    	//return new Customer();
     }
 
 
-	public void sendNotification(Customer customer, Reward reward) {
+	public void sendNotification(Customer customer, IReward reward) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -173,7 +173,7 @@ public class LoyaltyService implements ILoyaltyService{
 	}
 
 	@Override
-	public boolean redeemReward(ICustomer customer, Reward reward) {
+	public boolean redeemReward(ICustomer customer, IReward reward) {
 		// TODO Auto-generated method stub
 		return false;
 	}

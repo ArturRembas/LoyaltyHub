@@ -1,9 +1,13 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 /**
 * Purchase class represents a purchase made by a customer at a store.
@@ -11,45 +15,101 @@ import jakarta.persistence.Id;
 * and the points earned by the customer for this purchase.
 */
 @Entity
-public class Purchase {
+public class Purchase implements IPurchase {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int customerId;
-    private double totalAmount;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
+    private double amount;
+    private int pointsEarned;
+    private LocalDateTime date;
 
     public Purchase() {
     }
 
-    public Purchase(int customerId, double totalAmount) {
-        this.customerId = customerId;
-        this.totalAmount = totalAmount;
+    public Purchase(Customer customer, Store store, double amount, int pointsEarned, LocalDateTime date) {
+        this.customer = customer;
+        this.store = store;
+        this.amount = amount;
+        this.pointsEarned = pointsEarned;
+        this.date = date;
     }
 
     // Getters and Setters
+	@Override
 	public int getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public int getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
-	}
-
+	@Override
 	public double getTotalAmount() {
-		return totalAmount;
+		return amount;
 	}
 
-	public void setTotalAmount(double totalAmount) {
-		this.totalAmount = totalAmount;
+	@Override
+	public void setTotalAmount(double amount) {
+		this.amount = amount;
+	}
+
+	@Override
+	public int getPointsEarned() {
+		return pointsEarned;
+	}
+
+	@Override
+	public void setPointsEarned(int pointsEarned) {
+		this.pointsEarned = pointsEarned;
+	}
+
+	@Override
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	@Override
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
+
+	@Override
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	@Override
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	@Override
+	public Store getStore() {
+		return store;
+	}
+
+	@Override
+	public void setStore(Store store) {
+		this.store = store;
+	}
+
+	@Override
+	public double getAmount() {
+		return amount;
+	}
+
+	@Override
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 
 }

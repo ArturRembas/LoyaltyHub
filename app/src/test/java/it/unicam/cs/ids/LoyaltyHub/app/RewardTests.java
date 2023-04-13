@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RewardTests {
 
-    private Reward reward;
+    private IReward reward;
     private Store store;
     private Customer customer;
 

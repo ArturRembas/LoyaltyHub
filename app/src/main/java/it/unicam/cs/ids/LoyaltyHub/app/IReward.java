@@ -15,6 +15,25 @@ package it.unicam.cs.ids.LoyaltyHub.app;
  * maintainable as the needs of the reward system evolve over time.
  */
 public interface IReward {
+
+	int getId();
+
+	void setId(int id);
+
 	String getName();
-    int getPointsRequired();
+
+	void setName(String name);
+
+	int getPointsRequired();
+
+	void setPointsRequired(int pointsRequired);
+
+	void setStore(Store store);
+
+	Store getStore();
+
+	void setCustomer(Customer customer);
+
+	Customer getCustomer();
+
 }

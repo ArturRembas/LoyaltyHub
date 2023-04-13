@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PurchaseTest {
-    private Purchase purchase;
+    private IPurchase purchase;
 
     @BeforeEach
     void setUp() {

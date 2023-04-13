@@ -17,6 +17,6 @@ package it.unicam.cs.ids.LoyaltyHub.app;
 public interface ILoyaltyService {
 	void registerCustomer(ICustomer customer);
     void assignLoyaltyPoints(ICustomer customer, int points);
-    boolean redeemReward(ICustomer customer, Reward reward);
+    boolean redeemReward(ICustomer customer, IReward reward);
     
 }
