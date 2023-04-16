@@ -1,5 +1,6 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
+import java.util.List;
 
 /**
  * ICustomer interface represents a contract for a customer in the loyalty system.
@@ -29,4 +30,6 @@ public interface ICustomer {
     void setPassword(String password);
     String getPhoneNumber();
     void setPhoneNumber(String phoneNumber);
+	List<RedemptionRequest> getRedemptionRequests();
+	void setRedemptionRequests(List<RedemptionRequest> redemptionRequests);
 }

@@ -1,5 +1,7 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
+import java.util.List;
+
 /**
 *IPointsPolicy represents an interface for managing points policies
 *in the loyalty system. A points policy defines how points are earned and
@@ -18,5 +20,6 @@ public interface IPointsPolicy {
     void setMinimumPurchaseAmount(double minimumPurchaseAmount);
     double getPointsPerCurrency();
     void setPointsPerCurrency(double pointsPerCurrency);
-    
+	List<Reward> getRewards();
+	void setRewards(List<Reward> rewards);
 }

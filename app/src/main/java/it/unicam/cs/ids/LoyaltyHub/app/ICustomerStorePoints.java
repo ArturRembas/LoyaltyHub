@@ -1,5 +1,6 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
+import java.util.List;
 
 /**
  * ICustomerStorePoints interface represents a contract for managing the relationship
@@ -32,4 +33,12 @@ public interface ICustomerStorePoints {
     int getLoyaltyPoints();
 
     void setLoyaltyPoints(int loyaltyPoints);
+    
+	void addPoints(int points);
+
+    boolean redeemPoints(int points);
+
+	List<Purchase> getPurchases();
+
+	void setPurchases(List<Purchase> purchases);
 }

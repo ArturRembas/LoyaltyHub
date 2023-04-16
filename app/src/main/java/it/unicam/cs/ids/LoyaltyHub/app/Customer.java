@@ -1,6 +1,8 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
 
+import java.util.List;
+
 //import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.persistence.Column;
@@ -8,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 
 /**
@@ -45,6 +48,8 @@ public class Customer implements ICustomer{
     private String email;
     @Column(columnDefinition = "VARCHAR(255)")
     private String password;
+    @OneToMany(mappedBy = "customer")
+    private List<RedemptionRequest> redemptionRequests;
 
 
     public Customer() {
@@ -118,6 +123,14 @@ public class Customer implements ICustomer{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public List<RedemptionRequest> getRedemptionRequests() {
+	    return redemptionRequests;
+	}
+
+	public void setRedemptionRequests(List<RedemptionRequest> redemptionRequests) {
+	    this.redemptionRequests = redemptionRequests;
 	}
     
 }

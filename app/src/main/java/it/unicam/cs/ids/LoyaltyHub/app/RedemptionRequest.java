@@ -25,8 +25,10 @@ public class RedemptionRequest implements IRedemptionRequest {
     @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
+    @ManyToOne
+    @JoinColumn(name = "reward_id")
+    private Reward reward;
     private int pointsToRedeem;
-    private int rewardId;
     private LocalDateTime date;
     private boolean isApproved;
    
@@ -38,14 +40,14 @@ public class RedemptionRequest implements IRedemptionRequest {
     
     
     public RedemptionRequest(int id, Customer customer, int pointsToRedeem, int rewardId, LocalDateTime date,
-			boolean isApproved, Store store) {
+			boolean isApproved, Store store, Reward reward) {
 		this.id = id;
 		this.customer = customer;
 		this.pointsToRedeem = pointsToRedeem;
-		this.rewardId = rewardId;
 		this.date = date;
 		this.isApproved = isApproved;
 		this.store = store;
+		this.reward=reward;
 	}
 
     
@@ -112,20 +114,6 @@ public class RedemptionRequest implements IRedemptionRequest {
 
 
 	@Override
-	public int getRewardId() {
-		return rewardId;
-	}
-
-
-
-	@Override
-	public void setRewardId(int rewardId) {
-		this.rewardId = rewardId;
-	}
-
-
-
-	@Override
 	public Store getStore() {
 		return store;
 	}
@@ -142,6 +130,18 @@ public class RedemptionRequest implements IRedemptionRequest {
 	@Override
 	public void setDate(LocalDateTime date) {
 		this.date = date;
+	}
+
+
+	@Override
+	public Reward getReward() {
+		return reward;
+	}
+
+
+	@Override
+	public void setReward(Reward reward) {
+		this.reward = reward;
 	}
 
     

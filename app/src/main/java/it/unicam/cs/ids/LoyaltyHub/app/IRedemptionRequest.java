@@ -25,14 +25,14 @@ public interface IRedemptionRequest {
 
 	void setCustomer(Customer customer);
 
-	int getRewardId();
-
-	void setRewardId(int rewardId);
-
 	Store getStore();
 
 	void setStore(Store store);
 
 	void setDate(LocalDateTime date);
+	
+	Reward getReward();
+	
+	void setReward(Reward reward);
 
 }

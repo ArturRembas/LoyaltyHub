@@ -1,11 +1,14 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 
 /**
@@ -28,6 +31,8 @@ public class CustomerStorePoints implements ICustomerStorePoints {
     private int id;
     private String customerId;
     private int storeId;
+    @OneToMany(mappedBy = "customerStorePoints", cascade = CascadeType.ALL)
+    private List<Purchase> purchases;
     private int loyaltyPoints;
     //private CustomerStorePointsRepository customerStorePointsRepository;
 	
@@ -94,5 +99,13 @@ public class CustomerStorePoints implements ICustomerStorePoints {
             return false;
         }
     }
+
+	public List<Purchase> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
+	}
 
 }

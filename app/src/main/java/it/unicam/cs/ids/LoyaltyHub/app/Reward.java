@@ -1,10 +1,13 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.JoinColumn;
 
 /**
@@ -23,14 +26,20 @@ public class Reward implements IReward{
     @JoinColumn(name = "store_id")
     private Store store;
     private String name;
+    @ManyToOne
+    @JoinColumn(name = "points_policy_id")
+    private PointsPolicy pointsPolicy;
+    @OneToMany(mappedBy = "reward")
+    private List<RedemptionRequest> redemptionRequests;
     private int pointsRequired;
 
     public Reward() {
     }
 
-    public Reward(String name, int pointsRequired) {
+    public Reward(String name, int pointsRequired, PointsPolicy pointsPolicy) {
         this.name = name;
         this.pointsRequired = pointsRequired;
+        this.pointsPolicy = pointsPolicy;
     }
     
     // Getters and Setters
@@ -85,4 +94,21 @@ public class Reward implements IReward{
 		return customer;
 	}
     
+	@Override
+	public PointsPolicy getPointsPolicy() {
+        return pointsPolicy;
+    }
+
+	@Override
+	public void setPointsPolicy(PointsPolicy pointsPolicy) {
+        this.pointsPolicy = pointsPolicy;
+    }
+
+	public List<RedemptionRequest> getRedemptionRequests() {
+		return redemptionRequests;
+	}
+
+	public void setRedemptionRequests(List<RedemptionRequest> redemptionRequests) {
+		this.redemptionRequests = redemptionRequests;
+	}
 }

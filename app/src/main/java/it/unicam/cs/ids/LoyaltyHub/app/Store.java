@@ -1,11 +1,14 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 /**
  * Store class represents a store that uses the loyalty program. Each store has a unique ID, a name,
@@ -25,6 +28,8 @@ public class Store implements IStore {
     @ManyToOne
     @JoinColumn(name = "points_policy_id")
     private PointsPolicy pointsPolicy;
+    @OneToMany(mappedBy = "store")
+    private List<RedemptionRequest> redemptionRequests;
 
     /**
      * Default constructor for the Store class.
@@ -123,5 +128,13 @@ public class Store implements IStore {
 
 	public void setPointsPolicy(PointsPolicy pointsPolicy) {
 		this.pointsPolicy=pointsPolicy;	
+	}
+
+	public List<RedemptionRequest> getRedemptionRequests() {
+		return redemptionRequests;
+	}
+
+	public void setRedemptionRequests(List<RedemptionRequest> redemptionRequests) {
+		this.redemptionRequests = redemptionRequests;
 	}
 }

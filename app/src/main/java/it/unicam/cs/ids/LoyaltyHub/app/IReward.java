@@ -1,5 +1,7 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
+import java.util.List;
+
 /**
  * IReward interface represents a contract for managing the functionality of rewards in the loyalty system.
  * <p>
@@ -36,4 +38,11 @@ public interface IReward {
 
 	Customer getCustomer();
 
+	PointsPolicy getPointsPolicy();
+	
+	void setPointsPolicy(PointsPolicy pointsPolicy);
+	
+	List<RedemptionRequest> getRedemptionRequests();
+	
+	void setRedemptionRequests(List<RedemptionRequest> redemptionRequests);
 }

@@ -26,6 +26,9 @@ public class Purchase implements IPurchase {
     @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
+    @ManyToOne
+    @JoinColumn(name = "customer_store_points_id")
+    private CustomerStorePoints customerStorePoints;
     private double amount;
     private int pointsEarned;
     private LocalDateTime date;
@@ -110,6 +113,14 @@ public class Purchase implements IPurchase {
 	@Override
 	public void setAmount(double amount) {
 		this.amount = amount;
+	}
+
+	public CustomerStorePoints getCustomerStorePoints() {
+		return customerStorePoints;
+	}
+
+	public void setCustomerStorePoints(CustomerStorePoints customerStorePoints) {
+		this.customerStorePoints = customerStorePoints;
 	}
 
 }

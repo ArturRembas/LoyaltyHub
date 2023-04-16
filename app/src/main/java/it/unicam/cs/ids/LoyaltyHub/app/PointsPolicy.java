@@ -1,9 +1,15 @@
 package it.unicam.cs.ids.LoyaltyHub.app;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
+
 
 /**
 * PointsPolicy class represents a policy for earning and redeeming points
@@ -16,9 +22,13 @@ public class PointsPolicy implements IPointsPolicy {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int storeId;
+    @OneToOne(mappedBy = "pointsPolicy")
+    @JoinColumn(name = "store_id")
+    private Store store;
     private double pointsPerCurrency;
     private double minimumPurchaseAmount;
+    @OneToMany(mappedBy = "pointsPolicy")
+    private List<Reward> rewards;
 
     /**
      * Default constructor for the PointsPolicy class.
@@ -33,8 +43,8 @@ public class PointsPolicy implements IPointsPolicy {
      * @param pointsPerCurrency    The number of points earned per unit of currency spent.
      * @param minimumPurchaseAmount The minimum purchase amount required to earn points.
      */
-    public PointsPolicy(int storeId, double pointsPerCurrency, double minimumPurchaseAmount) {
-        this.storeId = storeId;
+    public PointsPolicy(Store store, double pointsPerCurrency, double minimumPurchaseAmount) {
+        this.store = store;
         this.pointsPerCurrency = pointsPerCurrency;
         this.minimumPurchaseAmount = minimumPurchaseAmount;
     }
@@ -55,24 +65,6 @@ public class PointsPolicy implements IPointsPolicy {
      */
     public void setId(int id) {
         this.id = id;
-    }
-
-    /**
-     * Gets the store ID this points policy applies to.
-     *
-     * @return The store ID this points policy applies to.
-     */
-    public int getStoreId() {
-        return storeId;
-    }
-
-    /**
-     * Sets the store ID this points policy applies to.
-     *
-     * @param storeId The store ID to set for this points policy.
-     */
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
     }
 
     /**
@@ -121,4 +113,20 @@ public class PointsPolicy implements IPointsPolicy {
 
         return pointsEarned;
     }
+
+	public Store getStore() {
+		return store;
+	}
+
+	public void setStore(Store store) {
+		this.store = store;
+	}
+	
+	public List<Reward> getRewards() {
+	    return rewards;
+	}
+
+	public void setRewards(List<Reward> rewards) {
+	    this.rewards = rewards;
+	}
 }
